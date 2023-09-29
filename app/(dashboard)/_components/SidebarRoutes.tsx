@@ -1,10 +1,15 @@
 'use client';
 
-import { guestRoutes } from '@/constants/constants';
+import { guestRoutes, teacherRoutes } from '@/constants/constants';
+import { usePathname } from 'next/navigation';
+
 import SidebarItem from './SidebarItem';
 
 const SidebarRoutes = () => {
-	const routes = guestRoutes;
+	const pathname = usePathname();
+	const isTeacherPage = pathname?.includes('/teacher');
+
+	const routes = isTeacherPage ? teacherRoutes : guestRoutes;
 	return (
 		<>
 			<div className='flex flex-col w-full'>

@@ -1,4 +1,4 @@
-import { Compass, Layout } from 'lucide-react';
+import { BarChart, Compass, Layout, ListIcon } from 'lucide-react';
 
 export const guestRoutes = [
 	{
@@ -10,5 +10,18 @@ export const guestRoutes = [
 		icon: Compass,
 		label: 'Browse',
 		href: '/search',
+	},
+];
+
+export const teacherRoutes = [
+	{
+		icon: ListIcon,
+		label: 'Courses',
+		href: '/teacher/courses',
+	},
+	{
+		icon: BarChart,
+		label: 'Analytics',
+		href: '/teacher/analytics',
 	},
 ];
