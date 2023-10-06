@@ -7,7 +7,7 @@ import ToasterProvider from '@/components/provider/toaster-provider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Create Next App',
+  title: 'LMS Platform',
   description: 'A LMS platform build with Next.js 13',
 };
 
