@@ -68,7 +68,7 @@ const ChapterForm = ({
 			await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
 				list: updateData
 			});
-			toast.success('Chapeters reordered');
+			toast.success('Chapters reordered');
 			router.refresh();
 		} catch{
 			toast.error('Something went wrong');
