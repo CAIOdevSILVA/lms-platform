@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useConfettiStore } from '@/hooks/useConfettiStore';
 import { Loader2, Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -9,17 +10,17 @@ import ConfirmModal from '@/components/modals/ConfirmModal';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
-interface ChapterActionsProps {
+interface CourseActionsProps {
 	disabled: boolean;
 	courseId: string;
-	chapterId: string;
 	isPublished: boolean;
 }
 
-const ChapterActions = ({
-	disabled, chapterId, courseId, isPublished
-}: ChapterActionsProps) => {
+const CourseActions = ({
+	disabled, courseId, isPublished
+}: CourseActionsProps) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const confetti = useConfettiStore();
 	const router = useRouter();
 
 	const onClick = async () => {
@@ -27,11 +28,12 @@ const ChapterActions = ({
       setIsLoading(true);
 
       if (isPublished) {
-        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/unpublish`);
-        toast.success('Chapter unpublished');
+        await axios.patch(`/api/courses/${courseId}/unpublish`);
+        toast.success('Course unpublished');
       } else {
-        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/publish`);
-        toast.success('Chapter published');
+        await axios.patch(`/api/courses/${courseId}/publish`);
+        toast.success('Course published');
+				confetti.onOpen();
       }
 
       router.refresh();
@@ -46,10 +48,10 @@ const ChapterActions = ({
 		try {
 			setIsLoading(true);
 
-			await axios.delete(`/api/courses/${courseId}/chapters/${chapterId}`);
-			toast.success('Chapter deleted');
+			await axios.delete(`/api/courses/${courseId}`);
+			toast.success('Course deleted');
 			router.refresh();
-			router.push(`/teacher/courses/${courseId}`);
+			router.push('/teacher/courses');
 		} catch{
 			toast.error('Something went wrong');
 		}finally{
@@ -63,7 +65,6 @@ const ChapterActions = ({
 				{isLoading && (
 					<Loader2 className='animate-spin'/>
 				)}
-				
 				<Button
 					onClick={onClick}
 					disabled={disabled || isLoading}
@@ -86,4 +87,4 @@ const ChapterActions = ({
 	);
 };
 
-export default ChapterActions;
+export default CourseActions;
